@@ -30,10 +30,6 @@ export default {
     BubleChart,
     PieChart,
     RadarChart
-  },
-  data(){
-    return {
-    }
   }
 };
 </script>
