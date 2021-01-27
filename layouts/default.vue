@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import "@/filters"
 export default {
   data() {
     return {
@@ -79,6 +80,11 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Dashboard',
           to: '/dashboard',
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'Dashboard1',
+          to: '/dashboard1',
         },
         {
           icon: 'mdi-chart-bubble',

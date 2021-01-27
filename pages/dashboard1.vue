@@ -1,130 +1,66 @@
 <template>
   <v-container justify="center" align="center" class="mt-3">
-    <v-dialog
-      v-model="dialog"
-      
-      max-width="700"
-    >
-      <v-card>
-        <v-card-title class="headline" style="justify-content:center">
-          Job Logs
-        </v-card-title>
-        <v-card-text>
-          <div class="text-h2 pa-12" style="height:600px">log 입력 필요</div>
-        </v-card-text>
-        <!-- <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
-        </v-card-actions> -->
-      </v-card>
-    </v-dialog>
     <v-row>
-      <v-col cols="12" sm="8" md="6" >
+      <v-col cols="3" sm="3" md="3">
         <v-card>
           <v-card-title class="headline">
-            Jobs
-          <v-spacer></v-spacer>
-          <v-text-field
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            v-model="jsearch"
-          ></v-text-field>            
+            Job Result
           </v-card-title>
-          <v-data-table
-            :search="jsearch"
-            :headers="headers"
-            :items="jobs"
-            class="elevation-1"
-            @click:row="handleClick"            
-            :items-per-page="3"
-          >
-            <template v-slot:item.Status="{ item }">
-              <!-- <td :style="`${item.Status}`==Faluted?'color:red':'color:blue'">{{item.Status}}</td> -->
-              <td v-html="$options.filters.StatusColorJob(item.Status)">{{item.Status}}</td>
-            </template>          
-          </v-data-table>        
-        </v-card>
-        <v-card class="mt-5">
-          <v-card-title class="headline">
-            Schedules
-          <v-spacer></v-spacer>
-          <v-text-field
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            v-model="ssearch"
-          ></v-text-field>            
-          </v-card-title>
-          <v-data-table
-            :search="ssearch"
-            :headers="headers1"
-            :items="schedules"
-            :items-per-page="3"
-            class="elevation-1"
-          ></v-data-table>        
+          <div style="width:300px; height:200px"></div>      
         </v-card>
       </v-col>
-      <v-col cols="12" sm="8" md="6">
+      <v-col cols="6" sm="6" md="6">
         <v-card>
           <v-card-title class="headline">
-            Summary
+            Robot Network
           </v-card-title>
-          <div  class="d-flex justify-center">
-          <v-card>
-              <div style="height:200px;width:200px">
-                <h1>설명</h1>
-              </div>  
-          </v-card>
-          <v-card>
-              <div style="height:200px;width:200px">
-                <h1>표</h1>
-              </div>  
-          </v-card>
-          </div>
+          <div style="width:300px; height:200px"></div>      
         </v-card>
-        <v-card class="mt-5">
+      </v-col>
+      <v-col cols="3" sm="3" md="3">
+        <v-card>
           <v-card-title class="headline">
-            Robots
-          <v-spacer></v-spacer>
-          <v-text-field
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            v-model="rsearch"
-          ></v-text-field>            
+            AR Robot Status
           </v-card-title>
-          <v-data-table
-            :search="rsearch"
-            :headers="headers2"
-            :items="Robots"
-            :items-per-page="4"
-            class="elevation-1"
-          >
-            <template v-slot:item.Status="{ item }">
-              <!-- <td :style="`${item.Status}`==Faluted?'color:red':'color:blue'">{{item.Status}}</td> -->
-              <td v-html="$options.filters.StatusColorRobots(item.Status)">{{item.Status}}</td>
-            </template>             
-          </v-data-table>        
+          <div style="width:300px; height:200px"></div>      
         </v-card>
       </v-col>
     </v-row>
-    <v-row justify="center" align="center" class="mt-5">
+    <v-row>
+      <v-col cols="6">
+        <v-card>
+          <v-card-title class="headline">
+            Schedult & Job Result
+          </v-card-title>
+          <div style="width:300px; height:200px"></div>      
+        </v-card>
+      </v-col>
+      <v-col cols="6">
+        <v-card>
+          <v-card-title class="headline">
+            Robot Network
+          </v-card-title>
+          <div style="width:300px; height:200px"></div>      
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row justify="center" align="center">
+      <v-col cols="12">
+        <v-card>
+          <v-card-title class="headline">
+            Time Table
+          </v-card-title>
+          <div style="width:300px; height:200px"></div>                
+        </v-card>
+      </v-col>      
+    </v-row>
+    <!-- <v-row justify="center" align="center" class="mt-5">
       <v-col cols="12" sm="8" md="6">
         <v-card style="min-width:1000px">
         <line-chart></line-chart>
         </v-card>
       </v-col>
-    </v-row>
+    </v-row> -->
   </v-container>
 </template>
 
@@ -296,9 +232,6 @@ export default {
 }
 </script>
 <style scoped>
-.test{
-  color: blue !important;
-}
 .test1{
   color: red !important;
 }
