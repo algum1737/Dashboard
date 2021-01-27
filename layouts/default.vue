@@ -77,8 +77,8 @@ export default {
         // },
         {
           icon: 'mdi-chart-bubble',
-          title: '메뉴1',
-          to: '/inspire',
+          title: 'Dashboard',
+          to: '/dashboard',
         },
         {
           icon: 'mdi-chart-bubble',

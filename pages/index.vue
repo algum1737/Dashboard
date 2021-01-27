@@ -52,7 +52,7 @@ export default {
     }),
     methods: {
       login(){
-        this.$router.push({path:'/inspire',query:{'Login':true}})
+        this.$router.push({path:'/dashboard',query:{'Login':true}})
         let params={
           userId: this.userId,
           userPw: this.userPw,
