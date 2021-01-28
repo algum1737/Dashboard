@@ -1,5 +1,5 @@
 <template>
-  <v-container justify="center" align="center" class="mt-3">
+  <v-container>
     <v-dialog
       v-model="dialog"
       
@@ -12,19 +12,9 @@
         <v-card-text>
           <div class="text-h2 pa-12" style="height:600px">log 입력 필요</div>
         </v-card-text>
-        <!-- <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
-        </v-card-actions> -->
       </v-card>
     </v-dialog>
-    <v-row>
+    <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6" >
         <v-card>
           <v-card-title class="headline">
@@ -42,13 +32,13 @@
             :search="jsearch"
             :headers="headers"
             :items="jobs"
-            class="elevation-1"
+            class="elevation-1 tableSet"
             @click:row="handleClick"            
             :items-per-page="3"
           >
             <template v-slot:item.Status="{ item }">
               <!-- <td :style="`${item.Status}`==Faluted?'color:red':'color:blue'">{{item.Status}}</td> -->
-              <td v-html="$options.filters.StatusColorJob(item.Status)">{{item.Status}}</td>
+              <p style="margin:0" v-html="$options.filters.StatusColorJob(item.Status)">{{item.Status}}</p>
             </template>          
           </v-data-table>        
         </v-card>
@@ -69,7 +59,7 @@
             :headers="headers1"
             :items="schedules"
             :items-per-page="3"
-            class="elevation-1"
+            class="elevation-1 tableSet"
           ></v-data-table>        
         </v-card>
       </v-col>
@@ -85,9 +75,10 @@
               </div>  
           </v-card>
           <v-card>
-              <div style="height:200px;width:200px">
-                <h1>표</h1>
-              </div>  
+            <pie-chart style="height:200px;width:200px; margin-bottom:25px"></pie-chart>
+          </v-card>
+          <v-card>
+            <bar-chart style="height:200px;width:200px; margin-bottom:25px"></bar-chart>
           </v-card>
           </div>
         </v-card>
@@ -108,32 +99,36 @@
             :headers="headers2"
             :items="Robots"
             :items-per-page="4"
-            class="elevation-1"
+            class="elevation-1 tableSet"
           >
             <template v-slot:item.Status="{ item }">
               <!-- <td :style="`${item.Status}`==Faluted?'color:red':'color:blue'">{{item.Status}}</td> -->
-              <td v-html="$options.filters.StatusColorRobots(item.Status)">{{item.Status}}</td>
+              <p style="margin:0" v-html="$options.filters.StatusColorRobots(item.Status)">{{item.Status}}</p>
             </template>             
           </v-data-table>        
         </v-card>
       </v-col>
     </v-row>
-    <v-row justify="center" align="center" class="mt-5">
+    <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <v-card style="min-width:1000px">
         <line-chart></line-chart>
         </v-card>
       </v-col>
     </v-row>
-  </v-container>
+  </v-container>  
 </template>
 
 <script>
+import BarChart from '../components/BarChart.vue';
 import LineChart from '../components/LineChart.vue';
+import PieChart from '../components/PieChart.vue';
 
 export default {
   components:{
     LineChart,
+    PieChart,
+    BarChart,
   },
   methods: {
     handleClick(row) {
@@ -295,11 +290,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-.test{
-  color: blue !important;
-}
-.test1{
-  color: red !important;
-}
-</style>>

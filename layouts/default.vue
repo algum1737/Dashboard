@@ -105,8 +105,8 @@ export default {
   },
 }
 </script>
-<style scoped>
-/* .theme--light.v-label {
-  text-decoration-color : white
-} */
+<style>
+.tableSet td {
+  font-size: 0.7rem !important;
+}
 </style>
