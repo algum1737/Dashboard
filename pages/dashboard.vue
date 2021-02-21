@@ -14,52 +14,39 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-btn @click="changeData()"></v-btn>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6" >
         <v-card>
           <v-card-title class="headline">
             Jobs
-          <v-spacer></v-spacer>
-          <v-text-field
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            v-model="jsearch"
-          ></v-text-field>            
           </v-card-title>
           <v-data-table
-            :search="jsearch"
+            hide-default-footer
             :headers="headers"
             :items="jobs"
-            class="elevation-1 tableSet"
+            :sort-by.sync="jobSortBy"
+            :sort-desc.sync="jobSortDesc"
+            class="elevation-1 tableSet tableScroll"
             @click:row="handleClick"            
-            :items-per-page="3"
           >
             <template v-slot:item.Status="{ item }">
               <!-- <td :style="`${item.Status}`==Faluted?'color:red':'color:blue'">{{item.Status}}</td> -->
               <p style="margin:0" v-html="$options.filters.StatusColorJob(item.Status)">{{item.Status}}</p>
             </template>          
-          </v-data-table>        
+          </v-data-table>    
         </v-card>
         <v-card class="mt-5">
           <v-card-title class="headline">
-            Schedules
-          <v-spacer></v-spacer>
-          <v-text-field
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            v-model="ssearch"
-          ></v-text-field>            
+            Schedules        
           </v-card-title>
           <v-data-table
-            :search="ssearch"
+            :sort-by.sync="schSortBy"
+            :sort-desc.sync="schSortDesc"
             :headers="headers1"
             :items="schedules"
-            :items-per-page="3"
-            class="elevation-1 tableSet"
+            hide-default-footer
+            class="elevation-1 tableSet tableScroll"
           ></v-data-table>        
         </v-card>
       </v-col>
@@ -84,22 +71,18 @@
         </v-card>
         <v-card class="mt-5">
           <v-card-title class="headline">
-            Robots
-          <v-spacer></v-spacer>
-          <v-text-field
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            v-model="rsearch"
-          ></v-text-field>            
+            Robots    
           </v-card-title>
+            <!-- :sort-by.sync="robotSortBy"
+            :sort-desc.sync="robotSortDesc" -->
           <v-data-table
-            :search="rsearch"
             :headers="headers2"
             :items="Robots"
-            :items-per-page="4"
-            class="elevation-1 tableSet"
+            hide-default-footer
+            :sort-by.sync="robotSortBy"
+            :sort-desc.sync="robotSortDesc"
+            multi-sort
+            class="elevation-1 tableSet tableScroll"
           >
             <template v-slot:item.Status="{ item }">
               <!-- <td :style="`${item.Status}`==Faluted?'color:red':'color:blue'">{{item.Status}}</td> -->
@@ -123,14 +106,31 @@
 import BarChart from '../components/BarChart.vue';
 import LineChart from '../components/LineChart.vue';
 import PieChart from '../components/PieChart.vue';
-
+import d3 from '../components/d3.vue'
 export default {
   components:{
     LineChart,
     PieChart,
     BarChart,
+    d3
   },
   methods: {
+    changeData(){
+      console.log(this.jobs.length);
+      this.jobs = [
+        {
+          StartTime : 1,
+          JobName : "TEST001",
+          Status : "Faluted"
+        },
+        {
+          StartTime : 2,
+          JobName : "test",
+          Status : "Pending"
+        },
+      ]
+    },
+    
     handleClick(row) {
     // this.jobs.map((item, index) => {
     //     item.selected = item === row
@@ -140,9 +140,38 @@ export default {
     this.dialog = true
     console.log(row.StartTime)
   },
+
+    //   customSort: function(items, index, isDesc) {
+    //   items.sort((a, b) => {
+    //       if (index[0]=='date') {
+    //         if (!isDesc[0]) {
+    //             return new Date(b[index]) - new Date(a[index]);
+    //         } else {
+    //             return new Date(a[index]) - new Date(b[index]);
+    //         }
+    //       }
+    //       else {
+    //         if(typeof a[index] !== 'undefined'){
+    //           if (!isDesc[0]) {
+    //              return a[index].toLowerCase().localeCompare(b[index].toLowerCase());
+    //           }
+    //           else {
+    //               return b[index].toLowerCase().localeCompare(a[index].toLowerCase());
+    //           }
+    //         }
+    //       }
+    //   });
+    //   return items;
+    // }
   },
   data() {
     return {
+      jobSortBy: 'StartTime',
+      jobSortDesc: false,
+      schSortBy: 'ScheduleTime',
+      schSortDesc: false,
+      robotSortBy: ['Status','RobotName'],
+      robotSortDesc: [true,false],
       dialog: false,      
       jsearch:'',
       ssearch:'',
@@ -151,40 +180,59 @@ export default {
         {
           text: 'StartTime',
           align: 'start',
-          sortable: false,
           value: 'StartTime',
         },
-        { text: 'JobName', value: 'JobName' },
+        { text: 'JobName', sortable: false, value: 'JobName' },
         { text: 'Status', value: 'Status' },
       ],
       jobs: [
         {
-          StartTime : "01/25 12:34",
+          StartTime : 1,
           JobName : "TEST001_TestJob_UREnv",
           Status : "Faluted"
         },
         {
-          StartTime : "01/26 12:34",
+          StartTime : 1,
+          JobName : "TEST001_TestJob_UREnv",
+          Status : "Faluted"
+        },
+        {
+          StartTime : 1,
+          JobName : "TEST001_TestJob_UREnv",
+          Status : "Faluted"
+        },
+        {
+          StartTime : 1,
+          JobName : "TEST001_TestJob_UREnv",
+          Status : "Faluted"
+        },
+        {
+          StartTime : 1,
+          JobName : "TEST001_TestJob_UREnv",
+          Status : "Faluted"
+        },
+        {
+          StartTime : 2,
           JobName : "TEST001_TestJob_UREnv",
           Status : "Pending"
         },
         {
-          StartTime : "01/27 12:34",
+          StartTime :5,
           JobName : "TEST001_TestJob_UREnv",
           Status : "Running"
         },
         {
-          StartTime : "01/28 12:34",
+          StartTime : 6,
           JobName : "TEST001_TestJob_UREnv",
           Status : "Stoped"
         },
         {
-          StartTime : "01/29 12:34",
+          StartTime : 4,
           JobName : "TEST001_TestJob_UREnv",
           Status : "Successful"
         },
         {
-          StartTime : "01/30 12:34",
+          StartTime :10,
           JobName : "TEST001_TestJob_UREnv",
           Status : "Stopping"
         }
@@ -193,11 +241,10 @@ export default {
         {
           text: 'ScheduleTime',
           align: 'start',
-          sortable: false,
           value: 'ScheduleTime',
         },
-        { text: 'SchedlueName', value: 'SchedlueName' },
-        { text: 'Environment', value: 'Environment' },
+        { text: 'SchedlueName', sortable: false, value: 'SchedlueName' },
+        { text: 'Environment', sortable: false, value: 'Environment' },
       ],
       schedules: [
         {
@@ -235,11 +282,10 @@ export default {
         {
           text: 'RobotName',
           align: 'start',
-          sortable: false,
           value: 'RobotName',
         },
-        { text: 'Environments', value: 'Environments' },
-        { text: 'Jobs', value: 'Jobs' },
+        { text: 'Environments', sortable: false, value: 'Environments' },
+        { text: 'Jobs', sortable: false, value: 'Jobs' },
         { text: 'Status', value: 'Status' },
       ],
       Robots: [
@@ -268,7 +314,7 @@ export default {
           Status : "Busy"
         },         
         {
-          RobotName : "Robot005",
+          RobotName : "Robot007",
           Environments : "RPA_ROOM_UR",
           Jobs : "TEST001_TestJob_UREnv",
           Status : "Disconnected"
@@ -290,3 +336,4 @@ export default {
   },
 }
 </script>
+

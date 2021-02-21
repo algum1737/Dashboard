@@ -109,4 +109,8 @@ export default {
 .tableSet td {
   font-size: 0.7rem !important;
 }
+.tableScroll{
+  overflow: auto;
+  height: 300px;
+}
 </style>
