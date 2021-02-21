@@ -13,5 +13,6 @@ Vue.filter("StatusColorRobots", (value) => {
 //   if (value=='Faluted') return ('dkdkdkdk')
   if (value=='Available') return ('<span style="color:green">' + value + '</span>')
   else if (value=='Busy') return ('<span style="color:blue">' + value + '</span>')
+  else if (value=='Unresponsive') return ('<span style="color:gray">' + value + '</span>')
   else return ('<span style="color:red">' + value + '</span>')
 });

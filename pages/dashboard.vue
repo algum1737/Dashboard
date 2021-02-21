@@ -14,7 +14,7 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <v-btn @click="changeData()"></v-btn>
+    <!-- <v-btn @click="changeData()"></v-btn> -->
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6" >
         <v-card>
@@ -25,8 +25,6 @@
             hide-default-footer
             :headers="headers"
             :items="jobs"
-            :sort-by.sync="jobSortBy"
-            :sort-desc.sync="jobSortDesc"
             class="elevation-1 tableSet tableScroll"
             @click:row="handleClick"            
           >
@@ -41,8 +39,6 @@
             Schedules        
           </v-card-title>
           <v-data-table
-            :sort-by.sync="schSortBy"
-            :sort-desc.sync="schSortDesc"
             :headers="headers1"
             :items="schedules"
             hide-default-footer
@@ -79,9 +75,6 @@
             :headers="headers2"
             :items="Robots"
             hide-default-footer
-            :sort-by.sync="robotSortBy"
-            :sort-desc.sync="robotSortDesc"
-            multi-sort
             class="elevation-1 tableSet tableScroll"
           >
             <template v-slot:item.Status="{ item }">
@@ -114,7 +107,7 @@ export default {
     BarChart,
     d3
   },
-  methods: {
+  methods: {    
     changeData(){
       console.log(this.jobs.length);
       this.jobs = [
@@ -166,12 +159,6 @@ export default {
   },
   data() {
     return {
-      jobSortBy: 'StartTime',
-      jobSortDesc: false,
-      schSortBy: 'ScheduleTime',
-      schSortDesc: false,
-      robotSortBy: ['Status','RobotName'],
-      robotSortDesc: [true,false],
       dialog: false,      
       jsearch:'',
       ssearch:'',
@@ -180,10 +167,11 @@ export default {
         {
           text: 'StartTime',
           align: 'start',
+          sortable: false,
           value: 'StartTime',
         },
         { text: 'JobName', sortable: false, value: 'JobName' },
-        { text: 'Status', value: 'Status' },
+        { text: 'Status', sortable: false, value: 'Status' },
       ],
       jobs: [
         {
@@ -241,6 +229,7 @@ export default {
         {
           text: 'ScheduleTime',
           align: 'start',
+          sortable: false,
           value: 'ScheduleTime',
         },
         { text: 'SchedlueName', sortable: false, value: 'SchedlueName' },
@@ -282,11 +271,12 @@ export default {
         {
           text: 'RobotName',
           align: 'start',
+          sortable: false,
           value: 'RobotName',
         },
         { text: 'Environments', sortable: false, value: 'Environments' },
         { text: 'Jobs', sortable: false, value: 'Jobs' },
-        { text: 'Status', value: 'Status' },
+        { text: 'Status', sortable: false, value: 'Status' },
       ],
       Robots: [
         {
@@ -299,7 +289,7 @@ export default {
           RobotName : "Robot002",
           Environments : "RPA_ROOM_UR",
           Jobs : "-",
-          Status : "Available"
+          Status : "Unresponsive"
         },         
         {
           RobotName : "Robot003",
